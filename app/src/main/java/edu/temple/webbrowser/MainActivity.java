@@ -27,6 +27,17 @@ public class MainActivity extends Activity {
         editURL = (EditText) findViewById(R.id.urlAddress);
         currentTab = -1;
 
+        //Intents
+        Intent intent = getIntent();
+        if (intent.getData() != null) {
+            frags.add(FragmentTabs.newInstance(intent.getData().toString()));
+            currentTab++;
+            editURL.setText(frags.get(currentTab).getURL());
+            fragmentManager.beginTransaction()
+                    .replace(R.id.frameWeb, frags.get(currentTab))
+                    .commit();
+        }
+
         //Previous Tab
         findViewById(R.id.previousButton).setOnClickListener(new View.OnClickListener() {
             @Override
@@ -67,17 +78,6 @@ public class MainActivity extends Activity {
                         .commit();
             }
         });
-
-        //Intents
-        Intent intent = getIntent();
-        if (intent.getData() != null) {
-            frags.add(FragmentTabs.newInstance(intent.getData().toString()));
-            currentTab++;
-            editURL.setText(frags.get(currentTab).getURL());
-            fragmentManager.beginTransaction()
-                    .replace(R.id.frameWeb, frags.get(currentTab))
-                    .commit();
-        }
     }
 }
 
